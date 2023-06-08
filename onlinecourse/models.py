@@ -100,6 +100,9 @@ class Question(models.Model):
     question_text = models.CharField(max_length=200,default='question')
     grade = models.FloatField(default=0.0)
 
+    def __str__(self):
+        return "Question: " + self.question_text
+
     def is_get_score(self, selected_ids):
         all_answers = self.choice_set.filter(is_correct=True).count()
         selected_correct = self.choice_set.filter(is_correct=True, id__in=selected_ids).count()
@@ -113,6 +116,9 @@ class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=100, default='choice')
     is_correct = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.choice_text
 
 
 class Submission(models.Model):
